@@ -1,5 +1,5 @@
 const express = require('express');
-const ctrl = require('../controllers/studentController');
+const ctrl = require('../controllers/studentController.js'); // explicit .js helps
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get('/:id', ctrl.getStudentById);
 router.put('/:id', ctrl.updateStudent);
 router.delete('/:id', ctrl.deleteStudent);
 
-module.exports = router;           // ← export the router itself
+module.exports = router;    // export the router itself
