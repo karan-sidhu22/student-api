@@ -1,20 +1,20 @@
-# Use Node.js LTS Alpine (small image)
+# Node.js LTS (small image)
 FROM node:18-alpine
 
-# Set working directory inside container
+# App directory
 WORKDIR /usr/src/app
 
-# Copy package files first (for caching layer)
+# Install dependencies first (better layer caching)
 COPY package*.json ./
+# Use ci when lockfile exists; omit dev deps in container
+RUN npm ci --omit=dev || npm install --only=production
 
-# Install only production dependencies
-RUN npm install --only=production
-
-# Copy the rest of the project files
+# Copy the rest of the project
 COPY . .
 
-# Expose the port your app runs on
+# Runtime settings
+ENV NODE_ENV=production
 EXPOSE 8080
 
-# Start the server
+# Start the API
 CMD ["node", "backend/index.js"]
